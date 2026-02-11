@@ -1,0 +1,14 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://bkst8ail5ys0t"]
+
+[ext_resource type="Shader" uid="uid://0kche8aty55j" path="res://Shaders/crtTest.gdshader" id="1_20pq6"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_20pq6")
+shader_parameter/resolution = Vector2(640, 480)
+shader_parameter/scan_line_amount = 0.5
+shader_parameter/warp_amount = 0.02
+shader_parameter/vignette_amount = 0.1950000092625
+shader_parameter/vignette_intensity = 0.2
+shader_parameter/grille_amount = 0.05
+shader_parameter/brightness_boost = 1.2

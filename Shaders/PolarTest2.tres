@@ -1,0 +1,15 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dxraeamywwili"]
+
+[ext_resource type="Shader" uid="uid://d2g6464dswvll" path="res://Shaders/Posterize.gdshader" id="1_01tdb"]
+
+[resource]
+shader = ExtResource("1_01tdb")
+shader_parameter/Black = Color(0, 0, 0, 1)
+shader_parameter/level2 = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/level3 = Color(1, 1, 1, 1)
+shader_parameter/White = Color(1, 1, 1, 1)
+shader_parameter/colors = PackedColorArray(0.1111969, 0.11119682, 0.11119684, 1, 0.5360907, 0.026146898, 0.1165502, 1, 0.96474224, 0.96474224, 0.9647421, 1, 0.45452422, 0.45452428, 0.45452422, 1, 0.74138474, 0.7413847, 0.74138457, 1, 0.28485027, 0.28485027, 0.28485027, 1, 0.585062, 0.585062, 0.5850621, 1, 0.38668853, 0.006015044, 0.0539037, 1)
+shader_parameter/threshold1 = 0.1
+shader_parameter/threshold2 = 0.4
+shader_parameter/threshold3 = 0.6
+shader_parameter/pixelate = 1048.0

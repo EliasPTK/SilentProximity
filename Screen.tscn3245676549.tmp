@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3mbie4naabvj"]
+
+[ext_resource type="Script" uid="uid://v5ao5m4qpwh4" path="res://testPy.gd" id="1_4vkur"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_4vkur")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(471, 254)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(568, 311)

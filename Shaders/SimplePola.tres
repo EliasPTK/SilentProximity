@@ -1,0 +1,23 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://drjjwojrw4sh1"]
+
+[ext_resource type="Shader" uid="uid://j3xlr5nnx8k1" path="res://Shaders/Posterize2.gdshader" id="1_520l5"]
+
+[sub_resource type="Gradient" id="Gradient_cv8gg"]
+offsets = PackedFloat32Array(0, 0.47457626, 0.5677966, 0.63559324, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.48831698, 0.48831698, 0.48831698, 1, 0.80153155, 0, 0.26894662, 1, 0.6188505, 0.6188505, 0.6188505, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_631kh"]
+gradient = SubResource("Gradient_cv8gg")
+
+[resource]
+shader = ExtResource("1_520l5")
+shader_parameter/grad = SubResource("GradientTexture1D_631kh")
+shader_parameter/Black = Color(0, 0, 0, 1)
+shader_parameter/level2 = Color(0.5, 0.5, 0.5, 1)
+shader_parameter/level3 = Color(1, 1, 1, 1)
+shader_parameter/White = Color(1, 1, 1, 1)
+shader_parameter/colors = PackedColorArray(0, 0, 0, 1, 0.3137255, 0.3137255, 0.3137255, 1, 0.21960784, 0.21960784, 0.21960784, 1, 0.6392157, 0.6392157, 0.6392157, 1, 0.2784314, 0.2784314, 0.2784314, 1, 0.43137255, 0.43137255, 0.43137255, 1, 0.5686275, 0.56078434, 0.49411765, 1)
+shader_parameter/threshold1 = 0.04600009718499986
+shader_parameter/threshold2 = 0.4
+shader_parameter/threshold3 = 0.6
+shader_parameter/pixelate = 1048.0

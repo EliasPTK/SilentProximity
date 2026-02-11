@@ -1,0 +1,83 @@
+[gd_scene load_steps=8 format=3 uid="uid://c16tq136m8ul6"]
+
+[ext_resource type="PackedScene" uid="uid://c8f8i48nrnnhn" path="res://testWeb.tscn" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://dvbagor8g8xh4" path="res://movement.gd" id="1_onrkg"]
+[ext_resource type="Texture2D" uid="uid://hujlj3eoassp" path="res://icon.svg" id="3_i3pqv"]
+[ext_resource type="Material" uid="uid://drjjwojrw4sh1" path="res://Shaders/SimplePola.tres" id="4_hqtel"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_sh265"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4flbx"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("Face:imgAsStr")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_onrkg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_sh265")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.47923005, 0)
+current = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_sh265")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_4flbx")
+
+[node name="Face" parent="." groups=["faces"] instance=ExtResource("1_4flbx")]
+position = Vector2(-554.99994, 239)
+scale = Vector2(0.415, 0.415)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+offset_left = 957.00006
+offset_top = 472.0
+offset_right = 1597.0
+offset_bottom = 1052.0
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("3_i3pqv")
+
+[node name="TextureRect5" type="ColorRect" parent="CanvasLayer/TextureRect"]
+visible = false
+z_index = 1
+material = ExtResource("4_hqtel")
+layout_mode = 0
+offset_right = 639.99994
+offset_bottom = 580.0
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer"]
+offset_left = 65.0
+offset_top = 218.0
+offset_right = 193.0
+offset_bottom = 346.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_i3pqv")
+
+[node name="TextureRect3" type="TextureRect" parent="CanvasLayer"]
+offset_left = 67.0
+offset_top = 342.0
+offset_right = 195.0
+offset_bottom = 470.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_i3pqv")
+
+[node name="TextureRect4" type="TextureRect" parent="CanvasLayer"]
+offset_left = 67.0
+offset_top = 452.0
+offset_right = 195.0
+offset_bottom = 580.0
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_i3pqv")
