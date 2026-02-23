@@ -5,6 +5,7 @@ import os
 os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 import cv2
 import base64
+import sys
 
 # Global variable for the camera
 camera = None
@@ -48,7 +49,7 @@ async def capture_and_send(websocket):
     
     # Initialize camera if not already done
     if camera is None:
-        camera = initialize_camera(1)  # 0 is usually the default camera
+        camera = initialize_camera(0)  # 0 is usually the default camera
         if not camera.isOpened():
             print("Error: No cameras", flush=True)
             
@@ -79,8 +80,8 @@ async def capture_and_send(websocket):
             
             await websocket.send(json.dumps(message))
             
-            # Control frame rate (30 FPS)
-            await asyncio.sleep(1/30)
+            # Control frame rate (10 FPS)
+            await asyncio.sleep(1/10)
             
     except websockets.exceptions.ConnectionClosed:
         print("Connection closed during streaming", flush=True)
@@ -99,6 +100,10 @@ async def handler(websocket):
             
             if command == "start_stream":
                 await capture_and_send(websocket)
+            elif command == "stop_stream":
+                streaming = False
+                response = {"status": "stopped"}
+                await websocket.send(json.dumps(response))
                 
     except websockets.exceptions.ConnectionClosed:
         print("Client disconnected", flush=True)
@@ -106,10 +111,34 @@ async def handler(websocket):
 
 async def main():
     global camera
-    camera = initialize_camera(1)
-    print("Starting websocket server on ws://localhost:8779", flush=True)
+    port = 8765  # Default port
+    camera_index = 1  # Default camera
     
-    async with websockets.serve(handler, "localhost", 8779):
+    if len(sys.argv) > 1:
+        try:
+            port = int(sys.argv[1])
+        except ValueError:
+            print(f"Invalid port: {sys.argv[1]}, using default 8765", flush=True)
+    
+    if len(sys.argv) > 2:
+        try:
+            camera_index = int(sys.argv[2])
+        except ValueError:
+            print(f"Invalid camera index: {sys.argv[2]}, using default 1", flush=True)
+    
+    print(f"Starting websocket server on ws://localhost:{port}", flush=True)
+    print(f"Initializing camera {camera_index}...", flush=True)
+    
+    # Initialize camera BEFORE starting the websocket server
+    camera = initialize_camera(camera_index)
+    
+    if camera is None:
+        print(f"FATAL ERROR: Could not initialize camera {camera_index}!", flush=True)
+        sys.exit(1)
+    
+    print("Camera initialized successfully, starting server...", flush=True)
+    
+    async with websockets.serve(handler, "localhost", port):
         await asyncio.Future()  # run forever
 
 def cleanup():
@@ -117,6 +146,7 @@ def cleanup():
     if camera is not None:
         camera.release()
         print("Camera released", flush=True)
+
 
 if __name__ == "__main__":
     try:

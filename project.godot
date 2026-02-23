@@ -15,6 +15,18 @@ run/main_scene="uid://b0bdd56a70aed"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+webID="*res://web_id.gd"
+
+[display]
+
+window/stretch/mode="canvas_items"
+
+[global_group]
+
+faces=""
+
 [input]
 
 send={

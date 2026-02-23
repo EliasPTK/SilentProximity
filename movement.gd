@@ -14,18 +14,63 @@ var amSliding = false
 @export var hp = 20
 var maxhp = 20
 var impact = Vector3(0,0,0)
+var playerCount = 3
+var deadPlayers = []
 func _ready() -> void:
 	#	print(id)
 	set_multiplayer_authority(name.to_int())
+	if(is_multiplayer_authority()):
+		$Camera3D.current = true
+		$CanvasLayer.visible = true
+		$Face.set_multiplayer_authority(get_multiplayer_authority())
+		$Face.setup()
+		print("face connected")
+	else:
+		$Camera3D.current = false
+		$CanvasLayer.visible = false
+	
 func _physics_process(delta: float) -> void:
 	
-	
+
 	if(!is_multiplayer_authority()):
 		return
 	
+	
 	var faces = get_tree().get_nodes_in_group("faces")
+	playerCount = faces.size()
+	$CanvasLayer/Label3.text = str(playerCount)
+	faces.erase($Face)
+	var readyFaces = []
+	if($Face.imgAsStr != ""):
+		readyFaces.append("Me")
+		#print(len($Face.imgAsStr))
+		var image_data = Marshalls.base64_to_raw($Face.imgAsStr)
+		
+		# Create image from JPEG data
+		var image = Image.new()
+		var error = image.load_jpg_from_buffer(image_data)
+			
+		if error != OK:
+			print("Error loading image: ", error)
+			return
+		$CanvasLayer.get_child(0).texture =ImageTexture.create_from_image(image)
+		$CanvasLayer.get_child(0).get_child(0).size = $CanvasLayer.get_child(0).size 
+		$Camera3D/Head2/Node3D/Sprite3D.texture = ImageTexture.create_from_image(image)
+	
+	$CanvasLayer/OtherPlayers.position.y = 288 - (80 * (playerCount -2 ))
+	for i in $CanvasLayer/OtherPlayers.get_child_count():
+		
+		$CanvasLayer/OtherPlayers.get_child(i).visible = i < (playerCount - 1)
+		if((i + 1) in deadPlayers):
+			
+			$CanvasLayer/OtherPlayers.get_child(i).get_child(1).visible = true
+			
+		else:
+			$CanvasLayer/OtherPlayers.get_child(i).get_child(1).visible = false
 	for i in faces.size():
+		
 		if(faces[i].imgAsStr != ""):
+			readyFaces.append("Player: " + str(i))
 			var image_data = Marshalls.base64_to_raw(faces[i].imgAsStr)
 		
 		# Create image from JPEG data
@@ -36,10 +81,12 @@ func _physics_process(delta: float) -> void:
 				print("Error loading image: ", error)
 				return
 	
-	# Update texture
-			$CanvasLayer.get_child(i).texture =ImageTexture.create_from_image(image)
-			$CanvasLayer.get_child(i).get_child(0).size = $CanvasLayer.get_child(i).size 
 	
+	# Update texture
+			
+			$CanvasLayer/OtherPlayers.get_child(i).texture =ImageTexture.create_from_image(image)
+			$CanvasLayer/OtherPlayers.get_child(i).get_child(0).size = $CanvasLayer.get_child(i).size 
+	$CanvasLayer/Label4.text = str(readyFaces)
 	cam.set_multiplayer_authority(get_multiplayer_authority())
 	#if (!is_multiplayer_authority()):
 	#	return

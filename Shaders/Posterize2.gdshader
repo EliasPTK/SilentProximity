@@ -15,7 +15,7 @@ uniform vec4[23] colors: source_color;
 uniform float threshold1 	: hint_range(-2.0,1.0) = .1;
 uniform float threshold2 	: hint_range(0.0,1.0) = .4;
 uniform float threshold3	: hint_range(0.0,1.0) = .6;
-
+uniform float roundAmount = 24;
 
 uniform float pixelate: hint_range(2, 2096, 4) = 256;
 void distcalc(vec4 firstcolor, vec4 secondcolor, out float thisdist){
@@ -58,7 +58,7 @@ void fragment(){
 	
 	//Grayscale Mode:
 	
-	COLOR.rgb =round(COLOR.rgb * 24.0)/24.0;
+	COLOR.rgb =round(COLOR.rgb * roundAmount)/roundAmount;
 	COLOR.rgb = pow(COLOR.rgb, vec3(3,3,3)) * 4.0;
 	COLOR.rgb = vec3(COLOR.r,COLOR.r,COLOR.r);
 }

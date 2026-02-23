@@ -1,31 +1,41 @@
-[gd_scene load_steps=8 format=3 uid="uid://b0bdd56a70aed"]
+[gd_scene load_steps=11 format=3 uid="uid://b0bdd56a70aed"]
 
 [ext_resource type="Script" uid="uid://ckx5ilpms1nsp" path="res://lobby.gd" id="1_ll2xe"]
 [ext_resource type="PackedScene" uid="uid://c16tq136m8ul6" path="res://player.tscn" id="2_xrgmn"]
+[ext_resource type="Script" uid="uid://y6yv7higih71" path="res://webSocketButton.gd" id="3_2wvic"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ll2xe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2wvic"]
+albedo_color = Color(0.2580226, 0.31158656, 0.3837791, 1)
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_ll2xe"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ll2xe"]
+sky_top_color = Color(0.26015395, 0.4779694, 0.5942085, 1)
 
 [sub_resource type="Sky" id="Sky_xrgmn"]
 sky_material = SubResource("ProceduralSkyMaterial_ll2xe")
 
 [sub_resource type="Environment" id="Environment_2wvic"]
-background_mode = 2
 sky = SubResource("Sky_xrgmn")
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0285
+
+[sub_resource type="BoxMesh" id="BoxMesh_2wvic"]
 
 [node name="Lobby" type="Node3D"]
 script = ExtResource("1_ll2xe")
 player_scene = ExtResource("2_xrgmn")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(13.359396, 0, 0, 0, 1, 0, 0, 0, 13.359396, 0, 0, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
 transform = Transform3D(21.764145, 0, 0, 0, 1, 0, 0, 0, 21.764145, 0, 0, 0)
 mesh = SubResource("PlaneMesh_ll2xe")
 skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_2wvic")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(2.1477594, 0, 0, 0, 1, 0, 0, 0, 2.1477594, 0, 0, 0)
@@ -54,8 +64,48 @@ offset_right = 257.0
 offset_bottom = 44.0
 placeholder_text = "enter lobby id"
 
+[node name="WebSocket" type="Button" parent="CanvasLayer"]
+offset_left = 350.0
+offset_top = 58.0
+offset_right = 420.0
+offset_bottom = 102.0
+text = "Assign"
+script = ExtResource("3_2wvic")
+
+[node name="TextEdit" type="TextEdit" parent="CanvasLayer/WebSocket"]
+layout_mode = 0
+offset_left = 76.0
+offset_right = 257.0
+offset_bottom = 44.0
+placeholder_text = "enter websocket id"
+
+[node name="TextEdit2" type="TextEdit" parent="CanvasLayer/WebSocket"]
+layout_mode = 0
+offset_left = 262.0
+offset_right = 443.0
+offset_bottom = 44.0
+placeholder_text = "enter camera id"
+
+[node name="Label" type="Label" parent="CanvasLayer/WebSocket"]
+layout_mode = 0
+offset_top = -27.0
+offset_right = 255.0
+offset_bottom = -4.0
+text = "Current Websocket: 8912"
+
+[node name="Label" type="TextEdit" parent="CanvasLayer"]
+offset_left = 824.0
+offset_top = 60.0
+offset_right = 1033.0
+offset_bottom = 96.0
+editable = false
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.6885571, 0.7251821, 0, -0.7251821, 0.6885571, 0, 0, 0)
+light_color = Color(0.15127608, 0.15127605, 0.15127611, 1)
+light_energy = 3.134
+light_volumetric_fog_energy = 15.186
+shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_2wvic")
@@ -64,5 +114,15 @@ environment = SubResource("Environment_2wvic")
 _spawnable_scenes = PackedStringArray("uid://c16tq136m8ul6")
 spawn_path = NodePath("..")
 
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -0.23298715, 0.9724798, 0, -0.9724798, -0.23298715, 0, 2.8546097, -6.9638352)
+light_energy = 3.144
+light_volumetric_fog_energy = 16.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(16.42, 0, 0, 0, 16.42, 0, 0, 0, 16.42, 0, 19.06881, 4.519651)
+mesh = SubResource("BoxMesh_2wvic")
+
 [connection signal="button_down" from="CanvasLayer/Host" to="." method="_on_host_button"]
 [connection signal="button_down" from="CanvasLayer/Join" to="." method="_on_join_button"]
+[connection signal="button_down" from="CanvasLayer/WebSocket" to="CanvasLayer/WebSocket" method="_on_button_down"]

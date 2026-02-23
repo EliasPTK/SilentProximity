@@ -3,9 +3,10 @@ os.environ["OPENCV_VIDEOIO_MSMF_ENABLE_HW_TRANSFORMS"] = "0"
 import cv2 as cv
 import numpy as np
 
+cv.destroyAllWindows()
 # Create a VideoCapture object. The argument '0' specifies the default camera.
 # Use '1' or higher for additional cameras.
-cap = cv.VideoCapture(1)
+cap = cv.VideoCapture(0)
 
 # Check if the camera opened successfully
 if not cap.isOpened():

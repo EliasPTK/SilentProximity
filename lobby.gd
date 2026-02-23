@@ -7,6 +7,7 @@ var peer: SteamMultiplayerPeer
 @onready var join_button = $CanvasLayer/Join
 var is_host: bool = false
 var is_joining: bool = false
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	print(Steam.steamInit(480, true))
@@ -19,6 +20,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
+
 func host_lobby():
 	Steam.createLobby(Steam.LOBBY_TYPE_FRIENDS_ONLY, 8)
 	is_host = true
@@ -37,6 +39,7 @@ func _on_lobby_created(result: int, lobby_id: int):
 		multiplayer.peer_connected.connect(_add_player)
 		multiplayer.peer_disconnected.connect(_remove_player)
 		_add_player()
+		$CanvasLayer/Label.text = str(lobby_id)
 		print(lobby_id)
 func join_lobby(lobby_id : int):
 	is_joining = true
@@ -63,6 +66,8 @@ func _remove_player(id: int):
 	if !self.has_node(str(id)):
 		return
 	self.get_node(str(id)).queue_free()
+	Steam.steamShutdown()
+	
 
 func _on_host_button():
 	host_lobby()
