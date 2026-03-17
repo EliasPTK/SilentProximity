@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-webID="*res://web_id.gd"
+webID="*res://Scripts/web_id.gd"
 
 [display]
 

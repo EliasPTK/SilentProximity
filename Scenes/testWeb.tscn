@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c8f8i48nrnnhn"]
 
-[ext_resource type="Script" uid="uid://xayswbvbsha3" path="res://godotWebsock.gd" id="1_ayn0f"]
+[ext_resource type="Script" uid="uid://xayswbvbsha3" path="res://Scripts/godotWebsock.gd" id="1_ayn0f"]
 [ext_resource type="Material" uid="uid://drjjwojrw4sh1" path="res://Shaders/SimplePola.tres" id="2_0j67k"]
 [ext_resource type="Texture2D" uid="uid://hujlj3eoassp" path="res://icon.svg" id="2_cgd0p"]
 

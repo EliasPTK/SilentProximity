@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://drs5exi58om1u"]
 
-[ext_resource type="Script" uid="uid://bglkvwu6f1duh" path="res://nosignal.gd" id="1_37kl0"]
+[ext_resource type="Script" uid="uid://bglkvwu6f1duh" path="res://Scripts/nosignal.gd" id="1_lc1oi"]
 
 [sub_resource type="Gradient" id="Gradient_mf4mk"]
 
@@ -23,4 +23,4 @@ color_ramp = SubResource("Gradient_mf4mk")
 offset_right = 40.0
 offset_bottom = 40.0
 texture = SubResource("NoiseTexture2D_8uh7m")
-script = ExtResource("1_37kl0")
+script = ExtResource("1_lc1oi")

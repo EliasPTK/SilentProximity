@@ -1,10 +1,10 @@
 [gd_scene load_steps=31 format=4 uid="uid://c16tq136m8ul6"]
 
-[ext_resource type="PackedScene" uid="uid://c8f8i48nrnnhn" path="res://testWeb.tscn" id="1_4flbx"]
-[ext_resource type="Script" uid="uid://dvbagor8g8xh4" path="res://movement.gd" id="1_onrkg"]
+[ext_resource type="PackedScene" uid="uid://c8f8i48nrnnhn" path="res://Scenes/testWeb.tscn" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://dvbagor8g8xh4" path="res://Scripts/movement.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://hujlj3eoassp" path="res://icon.svg" id="3_i3pqv"]
 [ext_resource type="Material" uid="uid://drjjwojrw4sh1" path="res://Shaders/SimplePola.tres" id="4_hqtel"]
-[ext_resource type="Script" uid="uid://bglkvwu6f1duh" path="res://nosignal.gd" id="5_sweqy"]
+[ext_resource type="Script" uid="uid://bglkvwu6f1duh" path="res://Scripts/nosignal.gd" id="5_sweqy"]
 [ext_resource type="Material" uid="uid://bkst8ail5ys0t" path="res://Shaders/crtMat.tres" id="6_1jxqw"]
 [ext_resource type="PackedScene" uid="uid://bcwimqgxcm3td" path="res://Robit.fbx" id="6_2hs0m"]
 [ext_resource type="Shader" uid="uid://j3xlr5nnx8k1" path="res://Shaders/Posterize2.gdshader" id="7_dw050"]

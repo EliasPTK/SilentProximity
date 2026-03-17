@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3mbie4naabvj"]
+
+[ext_resource type="Script" uid="uid://v5ao5m4qpwh4" path="res://Scripts/testPy.gd" id="1_q8odg"]
+[ext_resource type="Script" uid="uid://bkngt0xkkwkcs" path="res://Scripts/setStuff.gd" id="2_w8lkc"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_q8odg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(471, 254)
+script = ExtResource("2_w8lkc")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(568, 311)

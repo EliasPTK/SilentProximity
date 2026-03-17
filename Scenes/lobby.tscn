@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://b0bdd56a70aed"]
 
-[ext_resource type="Script" uid="uid://ckx5ilpms1nsp" path="res://lobby.gd" id="1_ll2xe"]
-[ext_resource type="PackedScene" uid="uid://c16tq136m8ul6" path="res://player.tscn" id="2_xrgmn"]
-[ext_resource type="Script" uid="uid://y6yv7higih71" path="res://webSocketButton.gd" id="3_2wvic"]
+[ext_resource type="Script" uid="uid://ckx5ilpms1nsp" path="res://Scripts/lobby.gd" id="1_ll2xe"]
+[ext_resource type="PackedScene" uid="uid://c16tq136m8ul6" path="res://Scenes/player.tscn" id="2_xrgmn"]
+[ext_resource type="Script" uid="uid://y6yv7higih71" path="res://Scripts/webSocketButton.gd" id="3_2wvic"]
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_ll2xe"]
 
