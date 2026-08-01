@@ -1,0 +1,85 @@
+[gd_scene load_steps=6 format=3 uid="uid://bhalfiyxc5q5v"]
+
+[ext_resource type="Script" uid="uid://cjfehy7wb06w5" path="res://webcam_capture.gd" id="1_vwj2o"]
+
+[sub_resource type="Gradient" id="Gradient_vwj2o"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_66loc"]
+gradient = SubResource("Gradient_vwj2o")
+width = 160
+height = 90
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_vwj2o"]
+seed = 9
+frequency = 0.335
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_66loc"]
+width = 160
+height = 90
+noise = SubResource("FastNoiseLite_vwj2o")
+
+[node name="Node2D" type="CanvasLayer"]
+
+[node name="Sprite2D" type="TextureRect" parent="." groups=["cam"]]
+offset_left = 834.0
+offset_top = 468.0
+offset_right = 994.0
+offset_bottom = 558.0
+scale = Vector2(1.5, 1.5)
+texture = SubResource("GradientTexture2D_66loc")
+script = ExtResource("1_vwj2o")
+grayscale = true
+
+[node name="Sprite2D2" type="TextureRect" parent="Sprite2D"]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 90.0
+texture = SubResource("NoiseTexture2D_66loc")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_left = 18.999998
+offset_top = 49.000004
+offset_right = 179.0
+offset_bottom = 377.0
+scale = Vector2(1.55, 1.55)
+theme_override_constants/separation = 29
+
+[node name="Sprite2D" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_66loc")
+
+[node name="Sprite2D2" type="TextureRect" parent="VBoxContainer/Sprite2D"]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 90.0
+texture = SubResource("NoiseTexture2D_66loc")
+
+[node name="Sprite2D2" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_66loc")
+
+[node name="Sprite2D2" type="TextureRect" parent="VBoxContainer/Sprite2D2"]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 90.0
+texture = SubResource("NoiseTexture2D_66loc")
+
+[node name="Sprite2D3" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = SubResource("GradientTexture2D_66loc")
+
+[node name="Sprite2D2" type="TextureRect" parent="VBoxContainer/Sprite2D3"]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 90.0
+texture = SubResource("NoiseTexture2D_66loc")
