@@ -1,0 +1,140 @@
+[gd_scene load_steps=13 format=3 uid="uid://f34k2or433x"]
+
+[ext_resource type="Script" uid="uid://bdvy12s0el4ed" path="res://main.gd" id="1_qrdlk"]
+[ext_resource type="Script" uid="uid://e0l3i2qbvlds" path="res://steam.gd" id="1_vmdio"]
+[ext_resource type="PackedScene" uid="uid://dya8w7lyedpp0" path="res://player.tscn" id="2_lxlwp"]
+[ext_resource type="Script" uid="uid://bq6lmxqghmumw" path="res://webcam_reciever.gd" id="4_s4pbn"]
+[ext_resource type="Shader" uid="uid://ch5lodlsn1q2t" path="res://pixeler.gdshader" id="5_x5e5h"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_qrdlk"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_lxlwp"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_x5e5h"]
+frequency = 0.0346
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_65k1k"]
+noise = SubResource("FastNoiseLite_x5e5h")
+seamless = true
+seamless_blend_skirt = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_65k1k"]
+render_priority = 0
+shader = ExtResource("5_x5e5h")
+shader_parameter/texture_scale = 0.37999999150624
+shader_parameter/pixel_size = 0.030000001425
+shader_parameter/dither_strength = 1.0
+shader_parameter/dither_scale = 1.0
+shader_parameter/dither_light = Color(0.93965054, 0.9885147, 1, 1)
+shader_parameter/dither_dark = Color(0, 0, 0, 1)
+shader_parameter/light_steps = 7.0
+shader_parameter/albedo_texture = SubResource("NoiseTexture2D_65k1k")
+shader_parameter/albedo_tint = Color(0.6872149, 0.68721503, 0.6872149, 1)
+shader_parameter/light_pixel_size = 4.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_s4pbn"]
+
+[sub_resource type="Environment" id="Environment_x5e5h"]
+background_mode = 1
+background_energy_multiplier = 0.0
+tonemap_exposure = 0.25
+fog_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.2451
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_qrdlk")
+player_scene = ExtResource("2_lxlwp")
+
+[node name="Steam" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_vmdio")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Host" type="Button" parent="CanvasLayer"]
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 90.0
+offset_bottom = 70.0
+text = "Host
+"
+
+[node name="Join" type="Button" parent="CanvasLayer"]
+offset_left = 99.0
+offset_top = 5.0
+offset_right = 184.0
+offset_bottom = 70.0
+text = "Join"
+
+[node name="LineEdit" type="LineEdit" parent="CanvasLayer/Join"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 2.0
+offset_right = 250.0
+offset_bottom = 64.0
+placeholder_text = "Lobby id"
+
+[node name="LobbyID" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = 9.0
+offset_top = 75.0
+offset_right = 321.0
+offset_bottom = 98.0
+focus_mode = 2
+selection_enabled = true
+deselect_on_focus_loss_enabled = false
+
+[node name="Invite" type="Button" parent="CanvasLayer"]
+visible = false
+offset_left = 1039.0
+offset_top = 8.0
+offset_right = 1135.0
+offset_bottom = 70.0
+text = "Invite"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("uid://dya8w7lyedpp0")
+spawn_path = NodePath("..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -10.559681, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_qrdlk")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D/CollisionShape3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, 0, 0)
+mesh = SubResource("PlaneMesh_lxlwp")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("ShaderMaterial_65k1k")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.8447392, 0.5351783, 0, -0.5351783, 0.8447392, 0, 0, 0)
+light_energy = 0.0
+shadow_enabled = true
+
+[node name="webcam_reciever" type="Node3D" parent="."]
+script = ExtResource("4_s4pbn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.3286424, -9.994363, -0.60221314)
+mesh = SubResource("BoxMesh_s4pbn")
+surface_material_override/0 = SubResource("ShaderMaterial_65k1k")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="."]
+transform = Transform3D(0.9997318, 8.568785e-05, -0.023158222, 0.023158364, -0.0036990617, 0.99972516, -2.1115881e-10, -0.9999932, -0.0037000543, 0.460212, -9.073476, 0)
+light_energy = 16.0
+shadow_enabled = true
+spot_range = 76.445
+spot_attenuation = 5.75
+spot_angle = 51.34
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_x5e5h")
+
+[connection signal="pressed" from="CanvasLayer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="CanvasLayer/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="CanvasLayer/Invite" to="." method="_on_invite_pressed"]

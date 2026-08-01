@@ -1,0 +1,90 @@
+[gd_scene load_steps=13 format=3 uid="uid://dya8w7lyedpp0"]
+
+[ext_resource type="PackedScene" uid="uid://bhalfiyxc5q5v" path="res://Cam.tscn" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://cmon0v1sgv73r" path="res://movement.gd" id="1_onrkg"]
+[ext_resource type="Script" uid="uid://m3841hdo3fgu" path="res://FlashLight.gd" id="3_2hs0m"]
+[ext_resource type="Script" uid="uid://cy41f18gt7fux" path="res://player_interpolater.gd" id="3_i3pqv"]
+[ext_resource type="Texture2D" uid="uid://cieb4xhuhmi48" path="res://icon.svg" id="4_hqtel"]
+[ext_resource type="Script" uid="uid://bo33oncslgv2c" path="res://faceScreen.gd" id="4_sweqy"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sh265"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hqtel"]
+transparency = 1
+shading_mode = 0
+disable_ambient_light = true
+disable_fog = true
+disable_specular_occlusion = true
+albedo_texture = ExtResource("4_hqtel")
+
+[sub_resource type="Gradient" id="Gradient_hqtel"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sweqy"]
+gradient = SubResource("Gradient_hqtel")
+width = 159
+height = 119
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_onrkg"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_onrkg"]
+properties/0/path = NodePath("CharacterBody3D:second_id")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("CharacterBody3D:sync_position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("CharacterBody3D:sync_rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath("CharacterBody3D/Camera3D/SpotLight3D:visible")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[node name="Node3D" type="Node3D"]
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("my_item") groups=["players"]]
+script = ExtResource("1_onrkg")
+my_item = NodePath("Camera3D/SpotLight3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+shape = SubResource("CapsuleShape3D_sh265")
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6416444, 0)
+
+[node name="Node2D" parent="CharacterBody3D/Camera3D" instance=ExtResource("1_4flbx")]
+visible = false
+
+[node name="SpotLight3D" type="SpotLight3D" parent="CharacterBody3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, -0.074129224)
+light_color = Color(0.886506, 0.8473349, 0.52677524, 1)
+light_energy = 16.0
+light_volumetric_fog_energy = 0.0
+shadow_enabled = true
+spot_range = 8.058
+spot_attenuation = 2.48
+spot_angle = 37.62
+script = ExtResource("3_2hs0m")
+
+[node name="Sprite3D" type="Sprite3D" parent="CharacterBody3D/Camera3D"]
+transform = Transform3D(-0.67, 0, 1.8635504e-07, 0, 0.67, 0, -1.8635504e-07, 0, -0.67, 0, -0.114654064, -0.59077805)
+material_override = SubResource("StandardMaterial3D_hqtel")
+double_sided = false
+texture_filter = 0
+texture = SubResource("GradientTexture2D_sweqy")
+script = ExtResource("4_sweqy")
+
+[node name="Label3D" type="Label3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.344774, 0)
+billboard = 1
+text = "HELLO"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
+transform = Transform3D(0.96, 0, 0, 0, 0.96, 0, 0, 0, 0.96, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_onrkg")
+
+[node name="PlayerInterpolater" type="Node3D" parent="CharacterBody3D"]
+script = ExtResource("3_i3pqv")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_onrkg")
